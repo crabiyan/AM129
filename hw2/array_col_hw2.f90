@@ -45,26 +45,26 @@ program colhw2
 	
 	
 	!Debugging
-	print *, "A Matrix"
-	do i = 1, n
-		print *, A(i, :)
-	end do
-	
-	print *, "D Matrix"
-	do i=1, n
-		print *,  D(i,:)
-	end do
-	print *, "A * D = "
-	do i=1, n
-		print *, C1(i,:)
-	end do
-
-	print *, "D * A = "
-	do i = 1, n
-		print *, C2(i,:)
-	end do
-	
-	print *, "count = "
-	print *, count
+!	print *, "A Matrix"
+!	do i = 1, n
+!		print *, A(i, :)
+!	end do
+!	
+!	print *, "D Matrix"
+!	do i=1, n
+!		print *,  D(i,:)
+!	end do
+!	print *, "A * D = "
+!	do i=1, n
+!		print *, C1(i,:)
+!	end do
+!
+!	print *, "D * A = "
+!	do i = 1, n
+!		print *, C2(i,:)
+!	end do
+!	
+!	print *, "count = "
+!	print *, count
 
 end program colhw2
