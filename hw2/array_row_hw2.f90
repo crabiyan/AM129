@@ -3,7 +3,7 @@ program rowhw2
 
 	implicit none
 	integer i,j,k,l, f, result, count
-	integer, parameter :: m = 5, n = 5
+	integer, parameter :: m = 8192, n = 8192
 	integer, dimension(m,n) :: A, D, C1, C2
 	logical :: not_equal
 	D = 0.
