@@ -1,0 +1,10 @@
+# /codes/multifile/Makefile2
+
+output.txt: col2.exe
+	./col2.exe > output.txt
+
+col2.exe: array_col_hw2.o
+	gfortran array_col_hw2.o -o col2.exe -O0 -fdefault-real-8 -fdefault-double-8
+
+%.o : %.f90
+	gfortran -c $< 

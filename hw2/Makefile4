@@ -1,0 +1,10 @@
+# /codes/multifile/Makefile4
+
+output.txt: row1.exe
+	./row1.exe > output.txt
+
+row1.exe: array_row_hw2.o
+	gfortran array_row_hw2.o -o row1.exe -O3 -fdefault-real-8 -fdefault-double-8
+
+%.o : %.f90
+	gfortran -c $< 

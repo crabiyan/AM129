@@ -1,11 +1,28 @@
-
+! AM129 hw2
+!
+! Students:
+! Cameron Rabiyan - Driver
+! Maya Apotheker - Navigator
+! Manny Gamboa - Navigator
+!
+! Group 334-7
+!
+! Command Lines:
+! gfortran array_col_hw2.0 -o col3.exe -O3 -fdefault-real-8 -fdefault-double-8
+! gfortran array_col_hw2.0 -o col2.exe -O0 -fdefault-real-8 -fdefault-double-8
+! gfortran array_col_hw2.o -o col3.exe -g3 -fdefault-real-8 -fdefault-double-8 -Wall -Wextra -Wimplicit-interface -fPIC -fmax-errors=1 -g -fcheck=all -fbacktrace
+!
+! Makefiles:
+! make -f Makefile1
+! make -f Makefile2
+! make -f Makefile3
+!
 program colhw2
 
 	implicit none
-	integer i,j,k,l, f, result, count
+	integer i,j,k,l,f,result,count
 	integer, parameter :: m = 8192, n = 8192
 	integer, dimension(m,n) :: A, D, C1, C2
-	logical :: not_equal
 	D = 0.
 	C1 = 0.
 	C2 = 0.

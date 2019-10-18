@@ -1,0 +1,10 @@
+# /codes/multifile/Makefile6
+
+output.txt: row3.exe
+	./row3.exe > output.txt
+
+row3.exe: array_row_hw2.o
+	gfortran array_row_hw2.o -o row3.exe -g3 -fdefault-real-8 -fdefault-double-8 -Wall -Wextra -Wimplicit-interface -fPIC -fmax-errors=1 -g -fcheck=all -fbacktrace
+
+%.o : %.f90
+	gfortran -c $< 
