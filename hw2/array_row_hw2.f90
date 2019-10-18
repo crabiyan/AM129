@@ -1,5 +1,5 @@
 
-program colhw2
+program rowhw2
 
 	implicit none
 	integer i,j,k,l, f, result, count
@@ -12,16 +12,16 @@ program colhw2
 	
 	
 	! Matrix Initialization
-	do j=1,n
-		do i=1,m
+	do i=1,n
+		do j=1,m
 			A(i,j) = i+j
 			D(i,i) = i+i
 		end do
 	end do
 	
 	! AD Matrix Multiplication (Column Major)
-	do j=1, n
-		do i=1,m
+	do i=1, n
+		do j=1,m
 			k = A(i,j)
 			l = D(i,i)
 			f = D(j, j)
@@ -31,8 +31,8 @@ program colhw2
 	end do
 	
 	!AD - DA
-	do j=1, n
-		do i=1,m
+	do i=1, n
+		do j=1,m
 			k = C1(i,j)
 			l = C2(i,j)
 			result = k-l
@@ -67,4 +67,4 @@ program colhw2
 	print *, "count = "
 	print *, count
 
-end program colhw2
+end program rowhw2
