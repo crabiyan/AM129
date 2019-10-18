@@ -33,7 +33,15 @@ program test
 		end do
 	end do
 
-	 
+        !DA
+        do j=1, n
+                do i=1,m
+                        k=A(i,j)
+                        l=D(i,i)
+                        C2(i,j)=k*l
+                        
+                end do
+        end do
 	
 	
 	!Debugging
