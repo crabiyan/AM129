@@ -2,7 +2,11 @@
 program trapezoidIntegral
         implicit none
         real,dimension(25) :: xVals
+        real(kind=8) :: trapezoidFunc
         real accum
+        accum=0
+
+        trapezoidFunc(xVals,accum,0,1)
 
 end program trapezoidIntegral
 
