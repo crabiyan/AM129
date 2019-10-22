@@ -17,51 +17,66 @@
 ! make -f Makefile2
 ! make -f Makefile3
 !
-program driver
 
+module part1
+
+implicit none
+integer, parameter :: dp = kind(1.0d0)
+real(dp) :: diff, threshold, pi_true, pi_apprx, counter
+pi_true = acos(-1.d0)
+threshold = 1.e-16d0
+pi_apprx = 0.d0
+counter = 1.d0
+contains
+
+	subroutine recursion(diff, pi_apprx, counter)
+	
+		implicit none
+		real(dp), intent(inout) :: diff, pi_apprx, counter
+		diff = abs(pi_apprx - pi_true)
+		
+		if (diff > threshold) then
+			call apprxPi(pi_apprx, counter)
+			counter = counter + 1.d0
+		else
+			return
+		endif
+		
+	end subroutine recursion
+	
+	subroutine apprxPi(pi_apprx, counter)
+		implicit none
+		real(dp) :: tempA, tempB, tempC, tempD
+		real(dp), intent(inout) :: pi_apprx, counter
+		
+		tempA = 4.d0 / ((8.d0*counter) + 1.d0)
+		tempB = 2.d0 / ((8.d0*counter) + 4.d0)
+		tempC = 1.d0 / ((8.d0*counter) + 5.d0)
+		tempD = 1.d0 / ((8.d0*counter) + 6.d0)
+		pi_apprx = pi_apprx + ((16.d0**(-counter)) * (tempA - tempB - tempC - tempD))
+		call recursion(pi_apprx, counter)
+	end subroutine apprxPi
+
+end module part1
+
+program driver
+	
+	use part1
+	
 	implicit none
-	real(kind=8) :: diff, threshold, pi_true, pi_apprx, counter
+	integer, parameter :: dp = kind(1.0d0)
+	real(dp) :: diff, threshold, pi_true, pi_apprx, counter
 	pi_true = acos(-1.d0)
 	threshold = 1.e-16
+	pi_apprx = 0.d0
 
-	call recursion(diff, threshold, pi_true, pi_apprx, counter)
+	call recursion(diff, pi_apprx, counter)
 	
 	print *, "pi_true = ", pi_true
 	print *, "pi_approx = ", pi_apprx
 	print *, "n = ", counter
+	
 end program driver
-
-subroutine recursion(diff, threshold, pi_true, pi_apprx, m)
-
-	implicit none
-	real(kind=8), intent(in) :: threshold, pi_true
-	real(kind=8), intent(inout) :: diff, pi_apprx, m
-	diff = abs(pi_apprx - pi_true)
-	
-	if (diff > threshold) then
-		call apprxPi(pi_apprx, m)
-		m = m + 1
-	else
-		return
-	endif
-end subroutine recursion
-
-subroutine apprxPi(pi_apprx, limit)
-	implicit none
-	real(kind=8) :: tempA, tempB, tempC, tempD, x, f
-	real(kind=8), intent(in) :: limit
-	real(kind=8), intent(out) :: pi_apprx
-	x = limit
-	f = x * (-1)
-	
-	tempA = 4. / ((8.*x) + 1.)
-	tempB = 2. / ((8.*x) + 4.)
-	tempC = 1. / ((8.*x) + 5.)
-	tempD = 1. / ((8.*x) + 6.)
-	pi_apprx = pi_apprx + (16**(f)) * ((tempA - tempB - tempC - tempD))
-		
-end subroutine apprxPi
-
 
 
 function trapezoidFunc()
