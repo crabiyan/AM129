@@ -20,15 +20,15 @@
 program driver
 
 	implicit none
-	real(kind=8) :: n, pi_apprx, pi_true, threshold, diff
-	integer i
+	real(kind=8) :: n, i, pi_apprx, pi_true, threshold, diff
 	pi_true = acos(-1.d0)
 	threshold = 1.e-8
 	diff = abs(pi_apprx - pi_true)
 	
 	do i=1, n
 		if (diff > threshold) then
-			call apprxPi(pi_apprx, n)
+			print *, "entered if statement ", i, " times"
+			call apprxPi(pi_apprx, i)
 		endif
 	end do	
 	
@@ -40,14 +40,15 @@ end program driver
 
 subroutine apprxPi(pi_apprx, limit)
 	implicit none
-	real(kind=8) :: tempA, tempB, tempC, tempD
+	real(kind=8) :: tempA, tempB, tempC, tempD, m
 	real(kind=8), intent(in) :: limit
 	real(kind=8), intent(out) :: pi_apprx
+	m = limit
 	
-	tempA = 4 / ((8*limit) + 1)
-	tempB = 2 / ((8*limit) + 4)
-	tempC = 1 / ((8*limit) + 5)
-	tempD = 1 / ((8*limit) + 6)
+	tempA = 4 / ((8*m) + 1)
+	tempB = 2 / ((8*m) + 4)
+	tempC = 1 / ((8*m) + 5)
+	tempD = 1 / ((8*m) + 6)
 	pi_apprx = pi_apprx + (16**(-limit) * (tempA + tempB + tempC + tempD))
 		
 end subroutine apprxPi
