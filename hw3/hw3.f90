@@ -20,36 +20,45 @@
 program driver
 
 	implicit none
-	real(kind=8) :: n, i, pi_apprx, pi_true, threshold, diff
+	real(kind=8) :: diff, threshold, pi_true, pi_apprx, counter
 	pi_true = acos(-1.d0)
-	threshold = 1.e-8
-	diff = abs(pi_apprx - pi_true)
-	
-	do i=1, n
-		if (diff > threshold) then
-			print *, "entered if statement ", i, " times"
-			call apprxPi(pi_apprx, i)
-		endif
-	end do	
+	threshold = 1.e-16
+
+	call recursion(diff, threshold, pi_true, pi_apprx, counter)
 	
 	print *, "pi_true = ", pi_true
 	print *, "pi_approx = ", pi_apprx
-	print *, "n = ", i
+	print *, "n = ", counter
 end program driver
 
+subroutine recursion(diff, threshold, pi_true, pi_apprx, m)
+
+	implicit none
+	real(kind=8), intent(in) :: threshold, pi_true
+	real(kind=8), intent(inout) :: diff, pi_apprx, m
+	diff = abs(pi_apprx - pi_true)
+	
+	if (diff > threshold) then
+		call apprxPi(pi_apprx, m)
+		m = m + 1
+	else
+		return
+	endif
+end subroutine recursion
 
 subroutine apprxPi(pi_apprx, limit)
 	implicit none
-	real(kind=8) :: tempA, tempB, tempC, tempD, m
+	real(kind=8) :: tempA, tempB, tempC, tempD, x, f
 	real(kind=8), intent(in) :: limit
 	real(kind=8), intent(out) :: pi_apprx
-	m = limit
+	x = limit
+	f = x * (-1)
 	
-	tempA = 4 / ((8*m) + 1)
-	tempB = 2 / ((8*m) + 4)
-	tempC = 1 / ((8*m) + 5)
-	tempD = 1 / ((8*m) + 6)
-	pi_apprx = pi_apprx + (16**(-limit) * (tempA + tempB + tempC + tempD))
+	tempA = 4. / ((8.*x) + 1.)
+	tempB = 2. / ((8.*x) + 4.)
+	tempC = 1. / ((8.*x) + 5.)
+	tempD = 1. / ((8.*x) + 6.)
+	pi_apprx = pi_apprx + (16**(f)) * ((tempA - tempB - tempC - tempD))
 		
 end subroutine apprxPi
 
