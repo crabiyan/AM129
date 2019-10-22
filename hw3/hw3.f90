@@ -20,22 +20,21 @@
 program driver
 
 	implicit none
-	real(kind=8) :: n, i, pi_apprx, pi_true
-	pi_real = acos(-1.d0)
+	real(kind=8) :: n, pi_apprx, pi_true, threshold, diff
+	integer i
+	pi_true = acos(-1.d0)
 	threshold = 1.e-8
 	diff = abs(pi_apprx - pi_true)
 	
 	do i=1, n
-		if diff > threshold
+		if (diff > threshold) then
 			call apprxPi(pi_apprx, n)
-		else
-			break
 		endif
 	end do	
 	
 	print *, "pi_true = ", pi_true
 	print *, "pi_approx = ", pi_apprx
-	print *, "n = ", n
+	print *, "n = ", i
 end program driver
 
 
