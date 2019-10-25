@@ -1,7 +1,7 @@
 
 module  trapezoidApprox
 implicit none
-real(kind=8), parameter:: n = 25d0, test2=0
+real(kind=8), parameter:: n = 25d0, test2=0, test3=0
 !real(kind=8) ::trapezoidFunc
 !real(kind=8) ::f
 
@@ -64,6 +64,25 @@ subroutine sub1(n,a,b, test2)
 				print *, 'subroutine returns'
 				print *, test2
 end subroutine
+
+subroutine trapezoidExact(a,b,test3)
+real(kind=8):: a,b,test3
+test3=g(b)-g(a)
+print *, 'exact returns'
+print *, test3
+end subroutine
+
+real(kind=8) function g(x)
+real(kind=8), intent(in):: x
+real(kind=8):: temp
+temp= x**3
+temp=(1.0/3.0)*temp
+temp = temp + x
+g = temp
+
+end function
+
+
 
 real(kind=8) function f(x)
 real(kind=8), intent(in):: x
