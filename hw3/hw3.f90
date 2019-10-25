@@ -58,7 +58,7 @@ program driver
 	pi_true = acos(-1.d0)
 	threshold = 1.e-16
 	pi_apprx = 0.d0
-        n=1        
+        n=0        
 	diff=0
 
 tempA = 4.d0 / ((8.d0*n) + 1.d0)
