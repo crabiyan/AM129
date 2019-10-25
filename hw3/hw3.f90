@@ -18,34 +18,7 @@
 ! make -f Makefile3
 
 
-!	subroutine recursion(diff, pi_apprx, counter)
-!
-!
-!		real(kind=8), intent(inout) :: diff, pi_apprx, counter
-!		diff = abs(pi_apprx - pi_true)
-!		
-!		if (diff > threshold) then
- !                       counter = counter +1.d0
-	!		call apprxPi(pi_apprx, counter)
-!	!		counter = counter + 1.d0
-!		else
-!			return
-!		endif
-!		
-!	end subroutine recursion
-	
-!	subroutine apprxPi(pi_apprx, counter)
-!		implicit none
-!		real(kind=8) :: tempA, tempB, tempC, tempD
-!		real(kind=8), intent(inout) :: pi_apprx, counter
-		
-!		tempA = 4.d0 / ((8.d0*counter) + 1.d0)
-!		tempB = 2.d0 / ((8.d0*counter) + 4.d0)
-!		tempC = 1.d0 / ((8.d0*counter) + 5.d0)
-!		tempD = 1.d0 / ((8.d0*counter) + 6.d0)
-!		pi_apprx = pi_apprx + ((16.d0**(-counter)) * (tempA - tempB - tempC - tempD))
-!		call recursion(pi_apprx, counter)
-!	end subroutine apprxPi
+
 
 
 program driver
