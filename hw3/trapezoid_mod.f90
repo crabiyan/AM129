@@ -46,22 +46,23 @@ subroutine sub1(n,a,b, test2)
         real(kind=8), intent(in):: a
         real(kind=8), intent(in):: b
         real(kind=8):: deltaX
-        real(kind=8):: firstLast
-        real(kind=8):: middle
+        real(kind=8):: firstLast1
+        real(kind=8):: middle1
         real(kind=8):: aggregate
 		real(kind=8):: test2
 		test2=0
         print *, 'hi2'
         deltaX=(1)/(n)
-        firstLast= deltaX*(f(a)+f(b))
+        firstLast1= deltaX*(f(a)+f(b))
         do i=2, n-1
                 print *, i*deltaX
-                middle=middle+(f(i*deltaX)*deltaX)
+                middle1=middle1+(f(i*deltaX)*deltaX)
 !                print *, middle
         end do
 
-                test2=firstLast+middle
-				print *, aggregate
+                test2=firstLast1+middle1
+				print *, 'subroutine returns'
+				print *, test2
 end subroutine
 
 real(kind=8) function f(x)
