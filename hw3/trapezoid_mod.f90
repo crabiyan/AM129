@@ -1,7 +1,7 @@
 
 module  trapezoidApprox
 implicit none
-real(kind=8), parameter:: n = 400, test2=0
+real(kind=8), parameter:: n = 25d0, test2=0
 !real(kind=8) ::trapezoidFunc
 !real(kind=8) ::f
 
