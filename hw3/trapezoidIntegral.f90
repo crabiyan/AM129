@@ -3,12 +3,12 @@ program trapezoidIntegral
         implicit none
         real:: n,test
         real(kind=8) :: trapezoidFunc
-
+        real(kind=8) :: f,x
 
 end program trapezoidIntegral
 
-function trapezoidFunc(n,a,b)
-
+function trapezoidFunc(n,a,b) result(aggregate)
+        real(kind=8) :: f,x
         real(kind=8), intent(in):: n
         real(kind=8), intent(in):: a
         real(kind=8), intent(in):: b
@@ -23,11 +23,11 @@ function trapezoidFunc(n,a,b)
         end do
                 aggregate=firstLast+middle
 
-        print *, "your approximation is"
-        print *, aggregate
+!        print *, "your approximation is"
+ !       print *, aggregate
 
 
-        trapezoidFunc = aggregate
+  !      trapezoidFunc = aggregate
 
 end function trapezoidFunc
 
