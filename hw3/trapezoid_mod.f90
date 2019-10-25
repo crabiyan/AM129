@@ -1,7 +1,7 @@
 
 module  trapezoidApprox
 implicit none
-real(kind=8), parameter:: n = 25
+real(kind=8), parameter:: n = 50
 !real(kind=8) ::trapezoidFunc
 !real(kind=8) ::f
 
@@ -23,7 +23,7 @@ function trapezoidFunc(n,a,b) result(aggregate)
         print *, 'hi2'
         deltaX=(1)/(n)
         firstLast= deltaX*(f(a)+f(b))
-        do i=2, 24
+        do i=2, n-1
                 print *, i*deltaX
                 middle=middle+(f(i*deltaX)*deltaX)
 !                print *, middle
