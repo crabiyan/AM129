@@ -22,6 +22,7 @@ function trapezoidFunc(n,a,b) result(aggregate)
         deltaX=(1)/(n)
         firstLast= deltaX*(f(a)+f(b))
         do i=2, 24
+                print *, i*deltaX
                 middle=middle+(f(i*deltaX)*deltaX)
 !                print *, middle
         end do
