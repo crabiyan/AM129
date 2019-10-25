@@ -4,7 +4,8 @@ program trapezoidIntegral
         real:: n,test
         real(kind=8) :: trapezoidFunc
         real(kind=8) :: f,x
-
+        print *, 'hi'
+        test= trapezoidFunc(25d0,0d0,1d0)
 end program trapezoidIntegral
 
 function trapezoidFunc(n,a,b) result(aggregate)
@@ -16,15 +17,18 @@ function trapezoidFunc(n,a,b) result(aggregate)
         real(kind=8):: firstLast
         real(kind=8):: middle
         real(kind=8):: aggregate
+        print *, 'hi2'
         deltaX=(1-0)/(2*n)
         firstLast= deltaX*(f(a)+f(b))
         do i=2, 24
                 middle=middle+f(i*deltaX)
+                print *, middle
         end do
+
                 aggregate=firstLast+middle
 
 !        print *, "your approximation is"
- !       print *, aggregate
+!        print *, aggregate
 
 
   !      trapezoidFunc = aggregate
