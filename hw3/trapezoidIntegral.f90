@@ -1,35 +1,40 @@
 
 program trapezoidIntegral
         implicit none
-        real,dimension(25) :: xVals
+        real:: n,test
         real(kind=8) :: trapezoidFunc
-        real accum
-        accum=0
 
-        trapezoidFunc(xVals,accum,0,1)
 
 end program trapezoidIntegral
 
-function trapezoidFunc(xVals, accum,a,b)
-        real,dimension(25), intent(inout) :: xVals
-        real deltaX
-        integer i,j
-        accum=0
-        xVals(1)=0
+function trapezoidFunc(n,a,b)
 
-        a=0
-        b=1
-
-        deltaX=(b-a)/25 
+        real(kind=8), intent(in):: n
+        real(kind=8), intent(in):: a
+        real(kind=8), intent(in):: b
+        real(kind=8):: deltaX
+        real(kind=8):: firstLast
+        real(kind=8):: middle
+        real(kind=8):: aggregate
+        deltaX=(1-0)/(2*n)
+        firstLast= deltaX*(f(a)+f(b))
         do i=2, 24
-                xVals(i)=i*deltaX
+                middle=middle+f(i*deltaX)
         end do
+                aggregate=firstLast+middle
 
-        do j=1,24
-                print *, xVals(j)
-        end do
+        print *, "your approximation is"
+        print *, aggregate
 
 
-
+        trapezoidFunc = aggregate
 
 end function trapezoidFunc
+
+real(kind=8) function f(x)
+real(kind=8), intent(in):: x
+f=x**2+1
+end function
+
+
+             
