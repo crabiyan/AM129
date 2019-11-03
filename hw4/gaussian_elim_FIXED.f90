@@ -46,12 +46,12 @@ program gauss
 	use gelim
 	use bsub
 	implicit none
-	real, allocatable, dimension(:,:) :: A(:,:)
-	real, allocatable, dimension(:) :: b(:)
+	real, allocatable, dimension(:,:) :: A
+	real, allocatable, dimension(:) :: b
 	real :: i, j
 
 	! initialize matrix A and vector b
-	A(:,:) = reshape((/2, 3, -1, 4, 7, 1, 7, 10, -4/), (/3,3/))
+	A = reshape( (/2, 3, -1, 4, 7, 1, 7, 10, -4/), (/3,3/))
 	b = (/1, 3, 4/)
 
 #ifdef PRINTINFO
