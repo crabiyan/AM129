@@ -71,7 +71,6 @@ program gauss
 		print*, "Gaussian elimination........"
 #endif
 		call gaussian_elimination(A,b,i,j)
-		!call gaussian_elimination(T,b,i,j)
 
 #ifdef PRINTINFO  
 		! print echelon form
@@ -84,7 +83,6 @@ program gauss
 		print*, "back subs......"
 #endif
 		call backsubstitution(A,b,i,j)
-		!call backsubstitution(T,b,i,j)
 
 
 #ifdef PRINTINFO  
@@ -101,6 +99,7 @@ program gauss
 		end do
 
 	! print results for A transpose
+		b = (/1,3,4/)
 		call gaussian_elimination(T,b,i,j)
 		call backsubstitution(T,b,i,j)		
 		print*, ""		
