@@ -46,14 +46,16 @@ program gauss
 	use gelim
 	use bsub
 	implicit none
-	real, allocatable, dimension(:,:) :: A
+	real, allocatable, dimension(:,:) :: A, T
 	real, allocatable, dimension(:) :: b
 	real :: i, j
 
 	! initialize matrix A and vector b
 	allocate (A(3,3))
+	allocate (T(3,3))
 	allocate (b(3))
 	A = reshape( (/2, 4, 7, 3, 7, 10, -1, 1, -4/), (/3,3/))
+	T = TRANSPOSE(A)	
 	b = (/1, 3, 4/)
 
 #ifdef PRINTINFO
@@ -69,6 +71,7 @@ program gauss
 		print*, "Gaussian elimination........"
 #endif
 		call gaussian_elimination(A,b,i,j)
+		!call gaussian_elimination(T,b,i,j)
 
 #ifdef PRINTINFO  
 		! print echelon form
@@ -81,7 +84,7 @@ program gauss
 		print*, "back subs......"
 #endif
 		call backsubstitution(A,b,i,j)
-
+		!call backsubstitution(T,b,i,j)
 
 
 #ifdef PRINTINFO  
@@ -93,6 +96,21 @@ program gauss
 
 		print*, ""
 		print*, "The solution vector is;"
+		do i = 1, 3
+			print*, b(i)
+		end do
+
+	! print results for A transpose
+		call gaussian_elimination(T,b,i,j)
+		call backsubstitution(T,b,i,j)		
+		print*, ""		
+		print*, "***********************"
+		do i = 1, 3
+			print*, T(i,:), "|", b(i)
+		end do
+
+		print*, ""
+		print*, "The Transposed solution vector is;"
 		do i = 1, 3
 			print*, b(i)
 		end do
