@@ -51,12 +51,14 @@ program gauss
 	real :: i, j
 
 	! initialize matrix A and vector b
-	A = reshape( (/2, 3, -1, 4, 7, 1, 7, 10, -4/), (/3,3/))
+	allocate (A(3,3))
+	allocate (b(3))
+	A = reshape( (/2, 4, 7, 3, 7, 10, -1, 1, -4/), (/3,3/))
 	b = (/1, 3, 4/)
 
 #ifdef PRINTINFO
 		! print augmented matrix
-		do i = 1, 10           ! i is row
+		do i = 1, 3           ! i is row
 			print*, A(i,:), "|", b(i)
 		end do
 #endif
@@ -71,7 +73,7 @@ program gauss
 #ifdef PRINTINFO  
 		! print echelon form
 		print*, "***********************"
-		do i = 1, 10
+		do i = 1, 3
 			print*, A(i,:), "|", b(i)
 		end do
 
@@ -85,13 +87,13 @@ program gauss
 #ifdef PRINTINFO  
 	  ! print the results
 		print*, "***********************"
-		do i = 1, 10
+		do i = 1, 3
 			print*, A(i,:), "|", b(i)
 		end do
 
 		print*, ""
 		print*, "The solution vector is;"
-		do i = 1, 10
+		do i = 1, 3
 			print*, b(i)
 		end do
 #endif
