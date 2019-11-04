@@ -1,0 +1,4 @@
+pi_true   	3.1415926535897931
+pi_apprx       0.d0
+threshold	     1.e-8
+diff           0
