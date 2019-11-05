@@ -19,9 +19,9 @@ module setup_module
   
  use read_initFile_module
  implicit none
-  real(kind=8), save :: pi_true, pi_apprx, threshold, diff
-  real, save :: tempA,tempB,tempC,tempD
-  integer, save :: counter = 0
+  real(kind=8), save :: pi_true, pi_apprx, threshold, diff, counter
+  !real, save :: tempA,tempB,tempC,tempD
+  !integer, save :: counter = 0
 
   
 contains
