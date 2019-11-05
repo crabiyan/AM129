@@ -1,16 +1,28 @@
 !!------------------------------------------------------------------
-!! A Fortran example code for finding a root of a user-defined 
-!! function f(x) = 0.
-!! 
-!! This code is written by Prof. Dongwook Lee for AMS 209.
-!!
-!! This module has one subroutine which initialize your setup
-!! by reading in runtime parameters from 'rootFinder.init' file.
-!! The setup_init subroutine calls read_initFile*** subroutines
-!! that are implemented as subroutines in read_initFile_module. 
-!!
+!! This code is referenced by Prof. Dongwook Lee for AMS 209.
 !!------------------------------------------------------------------
 
+! AM129 hw2
+
+! Students:
+! Cameron Rabiyan - Driver
+! Maya Apotheker - Navigator
+! Manny Gamboa - Navigator
+
+! Group 334-7
+
+! Command Lines:
+!gfortran -c -fdefault-double-8 -fdefault-real-8 read_initFile_module.F90
+!gfortran -c -fdefault-double-8 -fdefault-real-8 setup_module.F90
+!gfortran -c -fdefault-double-8 -fdefault-real-8 pi_module.f90
+!gfortran -fdefault-real-8 -fdefault-double-8 -o pi pi_driver.f90 read_initFile_module.F90 setup_module.F90 pi_module.f90
+!./pi
+
+! Or just run:
+! make
+
+! Makefiles:
+! makefile
 
 module setup_module
   

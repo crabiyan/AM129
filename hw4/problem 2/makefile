@@ -18,12 +18,9 @@ FFLAGS_DEBUG = -Wall -Wextra -Wimplicit-interface -fPIC -fmax-errors=1 -g -fchec
 
 FFLAGS_OPT = -ggdb -O3 -fdefault-real-8 -fdefault-double-8 -ffree-line-length-none -Wuninitialized
 
-EXE_FILE = pi.exe
+EXE_FILE = gauss.exe
 
-OBJS  = pi_driver.o \
-	read_initFile_module.o\
-	setup_module.o\
-	pi_module.o
+OBJS  = gaussian_elim_FIXED.o
 
 .PHONY: clean
 ########################################################################################
@@ -48,7 +45,7 @@ $(EXE_FILE) : $(OBJS)
 #######################################################################################
 #SOME USEFUL COMMANDS
 clean:
-	@rm -f *.o *.mod *~ pi.exe *.dat
+	@rm -f *.o *.mod *~ gauss.exe *.dat
 
 # debug: clean
 debug: FFLAGS_OPT = $(FFLAGS_DEBUG)
@@ -56,9 +53,7 @@ debug: $(EXE_FILE)
 
 #######################################################################################
 #LET'S DEFINE SOME MODULE DEPENDENCIES!
-pi_driver.o: setup_module.o pi_module.o
 
-setup_module.o : read_initFile_module.o
 
 
 #######################################################################################
