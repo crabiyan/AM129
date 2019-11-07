@@ -1,28 +1,19 @@
 import copy
-l = [1,2,3]
-def is_sorted(l):
-	for i,value in enumerate(l):
-		if i == 0:
-			temp = copy.copy(value)
-		elif temp >= value:
-			print ("False")
-			break
-		elif i == len(l)-1:
-			print ("True")
-		else:
-			temp = copy.copy(value)
 
-#is_sorted(l)
+l = [1,2,3]
+L = copy.copy(l)
 
 def cumulative_sum(l):
 	for i, value, in enumerate(l):
 		if i == 0:
 			temp = copy.copy(value)
-		L[i] = value + temp
+		else:
+		     L[i] = value + temp
+		temp = copy.copy(L[i])
 
 def print_list(summed_list):
 	for i, value, in enumerate(summed_list):
-		print ('L[%s] is %16s' % (index, summed_list[index]))
+		print ('L[%s] is %16s' % (i, summed_list[i]))
 
 cumulative_sum(l)
-
+print_list(L)
