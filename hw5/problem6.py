@@ -1,6 +1,3 @@
-import copy
-
-
 def verify_palindrome(s, i, count):
 	if i >= 2:
 		if s[i] == s[count]:
