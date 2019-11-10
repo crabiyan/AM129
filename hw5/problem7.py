@@ -17,6 +17,9 @@ def is_triangle(points):
 	if num1[0] == num2[0] == num3[0] or num1[1] == num2[1] == num3[1]:
 		print ("Not a triangle")
 		return False
+	elif num1==num2 or num1 == num3 or num2==num3:
+		print ("Not a triangle")
+		return False
 	else:
 		print ("Is a triangle")
 		return True
