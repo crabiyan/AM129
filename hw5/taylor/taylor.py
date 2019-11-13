@@ -13,10 +13,8 @@ def exp_appx(x,n):
 	denom = get_factorial(n)
 	temp = numer/denom
 	exp += temp
-	#print (exp, n)
 
 	if n <= 0:
-		#print (exp)
 		value=exp
 		exp=0
 		return (value)
@@ -25,11 +23,9 @@ def exp_appx(x,n):
 
 def sin_appx(x,n):
 	global sin_num, term, j
-	#exponent = (2*n) + 1
-	#numer = x**(exponent)
-	#denom = get_factorial(exponent)
-	#temp = numer/denom
-	#temp = exp_appx(x,exponent)
+	if n < 0:
+		print ("-ERROR- Invalid Input: n must be a non-negative integer")
+		return np.nan
 	if j == 1:
 		j+= 1
 		sin_num += x
@@ -49,13 +45,34 @@ def sin_appx(x,n):
 	elif j > n:
 		print ("Sin(x) Approximation = ", sin_num)
 		return (sin_num)
-	else:
-		j+=1
-		return sin_appx(x,n)
-	
-	
-#def cos_appx(x,n):
 
+	
+	
+def cos_appx(x,n):
+	global cos_num, term, j
+	if n < 0:
+		print ("-ERROR- Invalid Input: n must be a non-negative integer")
+		return np.nan
+	if j == 0:
+		j+= 1
+		cos_num += 1
+		return cos_appx(x,n)
+	elif j <= n:
+		if j % 2 == 0:
+			term = term*(-1)
+			numer=x**j
+			denom = get_factorial(j)
+			temp = term * (numer/denom)
+			cos_num = cos_num + temp
+			j+=1
+			return cos_appx(x,n)
+			
+		else:
+			j+=1
+			return cos_appx(x,n)
+	elif j > n:
+		print ("Cos(x) Approximation = ", cos_num)
+		return (cos_num)
 
 
 exp=0
@@ -70,5 +87,20 @@ denom=0
 exp=0
 temp=0
 j=1
-#print (math.sin(np/2))
-sin_appx((np.pi/2),5)
+sin_appx((np.pi/2),(-1))
+
+term=1
+value=0
+n=0
+cos_num=0
+numer=0
+denom=0
+exp=0
+temp=0
+j=0
+cos_appx((np.pi/2),-5)
+
+
+
+
+
