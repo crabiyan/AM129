@@ -1,13 +1,13 @@
-!------------------------------------------
-! AM129 hw5
-!
-! Students:
-! Cameron Rabiyan - Driver
-! Maya Apotheker - Navigator
-! Manny Gamboa - Navigator
-!
-! Group 334-7
-!------------------------------------------
+####################################################
+# AM129 hw5
+#
+# Students:
+# Cameron Rabiyan - Driver
+# Maya Apotheker - Navigator
+# Manny Gamboa - Navigator
+#
+# Group 334-7
+####################################################
 
 
 import copy
