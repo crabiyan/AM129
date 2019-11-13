@@ -1,3 +1,15 @@
+!------------------------------------------
+! AM129 hw5
+!
+! Students:
+! Cameron Rabiyan - Driver
+! Maya Apotheker - Navigator
+! Manny Gamboa - Navigator
+!
+! Group 334-7
+!------------------------------------------
+
+
 def verify_palindrome(s, i, count):
 	if i >= 2:
 		if s[i] == s[count]:

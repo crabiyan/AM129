@@ -1,3 +1,15 @@
+!------------------------------------------
+! AM129 hw5
+!
+! Students:
+! Cameron Rabiyan - Driver
+! Maya Apotheker - Navigator
+! Manny Gamboa - Navigator
+!
+! Group 334-7
+!------------------------------------------
+
+
 import os, sys
 import math
 import numpy as np
@@ -23,7 +35,7 @@ def exp_appx(x,n):
 
 def sin_appx(x,n):
 	global sin_num, term, j
-	if n < 0:
+	if n < 0 or (n-int(n) != 0):
 		print ("-ERROR- Invalid Input: n must be a non-negative integer")
 		return np.nan
 	if j == 1:
@@ -43,14 +55,19 @@ def sin_appx(x,n):
 			j+=1
 			return sin_appx(x,n)
 	elif j > n:
+		if (j-n) > 1:
+			print ("-ERROR- Invalid Input: n must be an integer")
+			return np.nan
 		print ("Sin(x) Approximation = ", sin_num)
 		return (sin_num)
+	else:
+		print ("ERROR")
 
 	
 	
 def cos_appx(x,n):
 	global cos_num, term, j
-	if n < 0:
+	if n < 0 or (n-int(n) != 0):
 		print ("-ERROR- Invalid Input: n must be a non-negative integer")
 		return np.nan
 	if j == 0:
@@ -71,6 +88,9 @@ def cos_appx(x,n):
 			j+=1
 			return cos_appx(x,n)
 	elif j > n:
+		if (j-n) > 1:
+			print ("-ERROR- Invalid Input: n must be an integer")
+			return np.nan
 		print ("Cos(x) Approximation = ", cos_num)
 		return (cos_num)
 
@@ -87,7 +107,7 @@ denom=0
 exp=0
 temp=0
 j=1
-sin_appx((np.pi/2),(-1))
+sin_appx((np.pi/2),(1.65465))
 
 term=1
 value=0
@@ -98,7 +118,7 @@ denom=0
 exp=0
 temp=0
 j=0
-cos_appx((np.pi/2),-5)
+cos_appx((np.pi/2),5.6)
 
 
 
