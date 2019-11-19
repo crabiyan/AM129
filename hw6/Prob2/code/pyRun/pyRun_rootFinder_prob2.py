@@ -23,37 +23,27 @@ Directory structure:
 #import #import some necessary Python modules
 import numpy.f2py as f2py
 import os, sys
+import os.path
 import subprocess
 from subprocess import Popen, PIPE
 
 def bash_command(cmd):
 
-	cur_dir= os.getcwd()
-	file_name = "rootFinder.exe"
-	sys.path.append('../newton_rootFinder/')
-	p = subprocess.Popen(['/bin/bash', '-c',cmd], cwd='../newton_rootFinder/')
-	p.wait(timeout=30)
+	p = subprocess.Popen(['/bin/bash', '-c',cmd])
+	p.wait(timeout=300)
 	p.kill()
-
-#	while True:
-#		entries = os.listdir(cur_dir)
-#		for entry in entries:
-#			if entry == 'rootFinder.exe':
-#				p.kill()
-#		break	
-def make_make(fsource,mod_name,args,ext):
-
-	bash_command('make')
-	#subprocess = Popen(["make"], stdout=subprocess.PIPE, cwd="../newton_rootFinder")
 	
-	#with open('RootFinder.F90') as fid:
-	#	fsource = fid.read()
-	#with open('findRootMethod_module.F90') as fid:
-	#	fsource = fid.read()
-	#with open('read_initFile_module') as fid:
-	#f2py.compile(fsource,modulename=mod_name,extra_args=args,verbose=True,extension=ext)
-
-	
+def make_make(file):
+	cur_dir = os.chdir("../newton_rootFinder/")
+	while True:
+		file_list = os.listdir(cur_dir)
+		if "rootFinder.exe" in file_list:
+			bash_command("make clean")
+			bash_command('make')
+			break
+		else:
+			bash_command('make')
+			break
     # 1. Compile the Fortran code if has not been compiled
     #    (i.e., if 'rootFinder.exe' does not exist yet);
     #
@@ -115,7 +105,9 @@ def make_make(fsource,mod_name,args,ext):
     
 if __name__ == '__main__':
 	
-	make_make('RootFinder.F90', 'RootFinder', 'gfortran -o RootFinder.exe', '.F90')
+	
+	file_name = "rootFinder.exe"
+	make_make(file_name)
 	
 #	make_make('RootFinder.F90', 'rootFinder', 'gfortran -ggdb -03 -fdefault-real-8 -fdefault-double-8 -ffree-line-length-none -Wuninitialized -c RootFinder.o read_initFile_module.o findRootMethod_module.o ftn_module.o output_module.o setup_module.o -o rootFinder.exe', '.F90')
 	
