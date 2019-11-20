@@ -20,40 +20,33 @@ Directory structure:
 """
 
 
-#import #import some necessary Python modules
 import numpy.f2py as f2py
 import os, sys
 import os.path
 import subprocess
 from subprocess import Popen, PIPE
 
-def bash_command(cmd):
+def bash_command(cmd, time_out):
 
 	p = subprocess.Popen(['/bin/bash', '-c',cmd])
-	p.wait(timeout=300)
+	p.wait(timeout=time_out)
 	p.kill()
 	
 def make_make(file):
+
 	cur_dir = os.chdir("../newton_rootFinder/")
 	while True:
 		file_list = os.listdir(cur_dir)
 		if "rootFinder.exe" in file_list:
-			bash_command("make clean")
-			bash_command('make')
+			bash_command("make clean", 300)
+			bash_command('make', 300)
 			break
 		else:
-			bash_command('make')
+			bash_command('make', 300)
 			break
-    # 1. Compile the Fortran code if has not been compiled
-    #    (i.e., if 'rootFinder.exe' does not exist yet);
-    #
-    # 2. Otherwise do "make clean" first and then "make".
-    #
-    # 3. You need to change your directory from "pyRun/" to
-    #    "newton_rootFinder/" to compile the Fortran code.
-
     
-#def runtimeParameters_init(some inputs???):
+#def runtimeParameters_init(run_name, method_type, x_beg, x_end, max_iter, threshold, init_guess, multiplicity):
+	
     # 1. Implement a routine that generates a new "rootFinder.init"
     #    runtime parameter file. Use a proper set of
     #    input arguments to produce a new rootFinder.init (with the same name)
@@ -69,7 +62,11 @@ def make_make(file):
     #    along with "rootFinder.init" which is the active runtime parameter file in use.
     
       
-#def run_rootFinder(some inputs???):
+def run_rootFinder(bash_cmd):
+
+	cur_dir = os.chdir("../newton_rootFinder/")
+	bash_command(bash_cmd, 300)
+
     # This routine executes the Fortran excutable, "rootFinder.exe"
     # using "rootFinder.init" you just created.
 
@@ -108,9 +105,7 @@ if __name__ == '__main__':
 	
 	file_name = "rootFinder.exe"
 	make_make(file_name)
-	
-#	make_make('RootFinder.F90', 'rootFinder', 'gfortran -ggdb -03 -fdefault-real-8 -fdefault-double-8 -ffree-line-length-none -Wuninitialized -c RootFinder.o read_initFile_module.o findRootMethod_module.o ftn_module.o output_module.o setup_module.o -o rootFinder.exe', '.F90')
-	
+
     # Set runtime parameters here
     # and call the above functions properly,
     # so that this Python code executes the Fortran code
