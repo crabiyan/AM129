@@ -111,13 +111,14 @@ def runtimeParameters_init(threshold):
 
 		if	path.exists("rootFinder.init"):
 			print("original exists")
+			os.rename("rootFinder.init", "rootFinder.init.1")
 			break 
 
-		elif  	dupExists==1:
-			print("duplicate exists")
-			break
-			#firstpart,secondpart = os.path.splitext("rootFinder.init.*")
-			#print(secondpart)
+		#elif  	dupExists==1:
+		#	print("duplicate exists")
+		#	break
+		#	firstpart,secondpart = os.path.splitext("rootFinder.init.*")
+		#	print(secondpart)
 
 
 
