@@ -27,6 +27,8 @@ import subprocess
 from subprocess import Popen, PIPE
 from os import path
 
+file_num = 0
+
 def bash_command(cmd, time_out):
 
 	p = subprocess.Popen(['/bin/bash', '-c',cmd])
@@ -65,26 +67,36 @@ def runtimeParameters_init(threshold):
     #      method_type  (... and some space ...) 'newton'
     #      ...
 
-	with open("rootFinder.init", "w+") as f:
-		if	path.exists("rootFinder.init") or path.exists("rootFinder.init.*"): 
-			print("exists")
-			
+	#with open("rootFinder.init", "w+") as f:
+
+		if	path.exists("rootFinder.init"):
+			print("original exists") 
+
+		elif  os.path.exists("rootFinder.init.%s" % file_num):
+			print(file_num)
+			print("number exists")
+			firstpart,secondpart = os.path.splitext("rootFinder.init.*")
+			print(secondpart)
+
+
 
 		else:
-			print("works")
-			f.write("HI\n")
-			f.write("run_name" + "\t" "'newton' # [char] Specify your outputfile name, eg., 'rootFinder_[run_name].dat' \n")
-			f.write("method_type" + "\t" "'newton' # [char] Choose a search method between 'newton' and 'modified_newton' \n")
+			with open("rootFinder.init", "w+") as f:
 
-			f.write("x_beg" + "\t\t" "-100.0" + "\t" + "#[real] Setting up the search domain \n")
-			f.write("x_end" + "\t\t" "30.0"  + "\t" + "#[real] Setting up the search domain \n")
+				print("works")
+				f.write("HI\n")
+				f.write("run_name" + "\t" "'newton' # [char] Specify your outputfile name, eg., 'rootFinder_[run_name].dat' \n")
+				f.write("method_type" + "\t" "'newton' # [char] Choose a search method between 'newton' and 'modified_newton' \n")
 
-			f.write("max_iter" + "\t" "10000 #[int] Maximum number of iteration\n")
-			f.write("threshold" + "\t" + str(threshold) + " #[int] Maximum number of iteration\n")
+				f.write("x_beg" + "\t\t" "-100.0" + "\t" + "#[real] Setting up the search domain \n")
+				f.write("x_end" + "\t\t" "30.0"  + "\t" + "#[real] Setting up the search domain \n")
 
-			f.write("ftn_type" + "\t" + "1" "\t" + " #[int] Types of function -- either 1 or 2\n")
-			f.write("init_guess" + "\t" + "2." +  "\t" + " #[real] Initial guess for root search. Users are responsible to pick a good one.\n")
-			f.write("multiplicity" + "\t" + "4" + "\t" + " #[int] The mulitiplicity of the root when using the modified newton method\n")
+				f.write("max_iter" + "\t" "10000 #[int] Maximum number of iteration\n")
+				f.write("threshold" + "\t" + str(threshold) + " #[int] Maximum number of iteration\n")
+
+				f.write("ftn_type" + "\t" + "1" "\t" + " #[int] Types of function -- either 1 or 2\n")
+				f.write("init_guess" + "\t" + "2." +  "\t" + " #[real] Initial guess for root search. Users are responsible to pick a good one.\n")
+				f.write("multiplicity" + "\t" + "4" + "\t" + " #[int] The mulitiplicity of the root when using the modified newton method\n")
 
 
 
