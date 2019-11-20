@@ -58,6 +58,8 @@ def make_make(file):
     # 3. You need to change your directory from "pyRun/" to
     #    "newton_rootFinder/" to compile the Fortran code.
 
+def split(word):
+	return list(word)
 
 def runtimeParameters_init(threshold):
     # 1. Implement a routine that generates a new "rootFinder.init"
@@ -86,9 +88,21 @@ def runtimeParameters_init(threshold):
 				
 				firstpart,secondpart = os.path.splitext(file)
 				print(secondpart)
-				print("\n")
+				#print("\n")
 				print(firstpart)
-				#os.rename(file, smth)
+		
+				listVar = split(secondpart)
+				num = listVar[1]
+				print("num is")
+				print(num)
+				
+				newNum = int(num)+1
+				print("newNum is")
+				print(newNum)
+				newName = firstpart + "." +  str(newNum) 
+				print("newName is")
+				print(newName)				
+				os.rename(file, newName)
 
 
 				break
