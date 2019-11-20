@@ -28,6 +28,8 @@ from subprocess import Popen, PIPE
 from os import path
 
 file_num = 0
+dupExists= 0
+
 
 def bash_command(cmd, time_out):
 
@@ -68,15 +70,40 @@ def runtimeParameters_init(threshold):
     #      ...
 
 	#with open("rootFinder.init", "w+") as f:
+	#cur_dir = os.chdir("../newton_rootFinder/")
+        #while True:
+	#	file_list = os.listdir(cur_dir)
+	#	for file in file_list:
+	#		if file.startswith("rootFinder.init."):
+	#			dupExists=1
+	#			break
+	cur_dir = os.chdir("../newton_rootFinder/")
+	while True:
+		file_list = os.listdir(cur_dir)
+		for file in file_list:
+			if file.startswith("rootFinder.init."):
+				dupExists=1
+				
+				firstpart,secondpart = os.path.splitext(file)
+				print(secondpart)
+				print("\n")
+				print(firstpart)
+				#os.rename(file, smth)
+
+
+				break
+
+
 
 		if	path.exists("rootFinder.init"):
-			print("original exists") 
+			print("original exists")
+			break 
 
-		elif  os.path.exists("rootFinder.init.%s" % file_num):
-			print(file_num)
-			print("number exists")
-			firstpart,secondpart = os.path.splitext("rootFinder.init.*")
-			print(secondpart)
+		elif  	dupExists==1:
+			print("duplicate exists")
+			break
+			#firstpart,secondpart = os.path.splitext("rootFinder.init.*")
+			#print(secondpart)
 
 
 
