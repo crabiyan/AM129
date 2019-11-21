@@ -60,6 +60,36 @@ def make_make(file):
 
 def split(words):
 	return list(words)
+
+def check_multiple_file(cur_dir, file_name):
+	file_count = 0
+	file_list = os.listdir(cur_dir)
+	original_exists = False
+	copy_exists = False
+	
+	if file_name in file_list:
+		
+		original_exists = True
+		file_name += '.'
+		
+		for file in file_list:
+			if file.startswith(file_name):
+				copy_exists = True
+				file_count += 1
+
+		if file_name+str(file_count) in file_list:
+			file_count+=1
+		file_name = file_name[:-1]
+			
+		if copy_exists == True:
+			if file_count == 0:
+				os.rename(file_name, file_name+'.'+str(1))
+			else:
+				print ("multiple files")
+				new_file = file_name+'.'+str(file_count)
+				os.rename(file_name, new_file)
+	
+				
 def runtimeParameters_init(threshold):
     # 1. Implement a routine that generates a new "rootFinder.init"
     #    runtime parameter file. Use a proper set of
@@ -69,15 +99,31 @@ def runtimeParameters_init(threshold):
     #      run_name     (... and some space ...) 'newton'
     #      method_type  (... and some space ...) 'newton'
     #      ...
+    
+#Cameron's test code	
+	newton_dir = os.chdir("../newton_rootFinder/")
+	file_name = ("rootFinder.init")
+	check_multiple_file(newton_dir, file_name)
+	
+	with open("rootFinder.init", "w+") as f:
 
-	#with open("rootFinder.init", "w+") as f:
-	#cur_dir = os.chdir("../newton_rootFinder/")
-        #while True:
-	#	file_list = os.listdir(cur_dir)
-	#	for file in file_list:
-	#		if file.startswith("rootFinder.init."):
-	#			dupExists=1
-	#			break
+		print("works")
+		f.write("TEST\n")
+		f.write("run_name" + "\t" "'newton' # [char] Specify your outputfile name, eg., 'rootFinder_[run_name].dat' \n")
+		f.write("method_type" + "\t" "'newton' # [char] Choose a search method between 'newton' and 'modified_newton' \n")
+
+		f.write("x_beg" + "\t\t" "-100.0" + "\t" + "#[real] Setting up the search domain \n")
+		f.write("x_end" + "\t\t" "30.0"  + "\t" + "#[real] Setting up the search domain \n")
+
+		f.write("max_iter" + "\t" "10000 #[int] Maximum number of iteration\n")
+		f.write("threshold" + "\t" + str(threshold) + " #[int] Maximum number of iteration\n")
+
+		f.write("ftn_type" + "\t" + "1" "\t" + " #[int] Types of function -- either 1 or 2\n")
+		f.write("init_guess" + "\t" + "2." +  "\t" + " #[real] Initial guess for root search. Users are responsible to pick a good one.\n")
+		f.write("multiplicity" + "\t" + "4" + "\t" + " #[int] The mulitiplicity of the root when using the modified newton method\n")
+
+#Maya's Code:	
+'''
 	cur_dir = os.chdir("../newton_rootFinder/")
 	while True:
 		file_list = os.listdir(cur_dir)
@@ -136,7 +182,7 @@ def runtimeParameters_init(threshold):
 				f.write("multiplicity" + "\t" + "4" + "\t" + " #[int] The mulitiplicity of the root when using the modified newton method\n")
 				break
 
-
+'''
 
     # 2. When writing a new "rootFinder.init", check if there is an old one already.
     #    If so, rename the old one to, say, "rootFinder.init.1" before
@@ -185,7 +231,6 @@ if __name__ == '__main__':
 	file_name = "rootFinder.exe"
 	make_make(file_name)
 	runtimeParameters_init(1.e-8)
-#	make_make('RootFinder.F90', 'rootFinder', 'gfortran -ggdb -03 -fdefault-real-8 -fdefault-double-8 -ffree-line-length-none -Wuninitialized -c RootFinder.o read_initFile_module.o findRootMethod_module.o ftn_module.o output_module.o setup_module.o -o rootFinder.exe', '.F90')
 	
     # Set runtime parameters here
     # and call the above functions properly,

@@ -1,4 +1,4 @@
-HI
+TEST
 run_name	'newton' # [char] Specify your outputfile name, eg., 'rootFinder_[run_name].dat' 
 method_type	'newton' # [char] Choose a search method between 'newton' and 'modified_newton' 
 x_beg		-100.0	#[real] Setting up the search domain 
