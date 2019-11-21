@@ -83,8 +83,9 @@ def runtimeParameters_init(threshold):
 		file_list = os.listdir(cur_dir)
 		for file in file_list:
 			if file.startswith("rootFinder.init."):
-				dupExists=1
-				
+				global dupExists 
+				dupExists = 1
+
 				firstpart,secondpart = os.path.splitext(file)
 				print(secondpart)
 				print("\n")
@@ -108,9 +109,9 @@ def runtimeParameters_init(threshold):
 			os.rename("rootFinder.init", "rootFinder.init.1")
 			break 
 
-#		elif  	dupExists==1:
+		elif  	dupExists==1:
 #			print("duplicate exists")
-#			break
+			break
 		#	firstpart,secondpart = os.path.splitext("rootFinder.init.*")
 		#	print(secondpart)
 
