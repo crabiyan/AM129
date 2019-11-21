@@ -41,7 +41,7 @@ $(EXE_FILE) : $(OBJS)
 #######################################################################################
 #SOME USEFUL COMMANDS
 clean:
-	@rm -f *.o *.mod *~ rootFinder.exe *.dat
+	@rm -f *.o *.mod *~ rootFinder.exe *.dat* *.init*
 
 # debug: clean
 debug: FFLAGS_OPT = $(FFLAGS_DEBUG)
