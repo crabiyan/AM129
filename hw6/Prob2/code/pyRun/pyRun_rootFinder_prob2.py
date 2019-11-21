@@ -80,11 +80,11 @@ def check_multiple_file(cur_dir, file_name):
 		if file_name+str(file_count) in file_list:
 			file_count+=1
 		file_name = file_name[:-1]
-			
-		if copy_exists == True:
+		
+		if original_exists == True:
 			if file_count == 0:
 				os.rename(file_name, file_name+'.'+str(1))
-			else:
+			elif copy_exists == True:
 				print ("multiple files")
 				new_file = file_name+'.'+str(file_count)
 				os.rename(file_name, new_file)
@@ -229,9 +229,14 @@ def run_rootFinder(bash_cmd):
 if __name__ == '__main__':
 	
 	file_name = "rootFinder.exe"
+	command = "./rootFinder.exe"
 	make_make(file_name)
+	runtimeParameters_init(1.e-4)
+	bash_command(command, 300)
+	runtimeParameters_init(1.e-6)
+	bash_command(command, 300)
 	runtimeParameters_init(1.e-8)
-	
+	bash_command(command, 300)
     # Set runtime parameters here
     # and call the above functions properly,
     # so that this Python code executes the Fortran code
