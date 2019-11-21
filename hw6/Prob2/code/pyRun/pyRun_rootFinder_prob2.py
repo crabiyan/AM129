@@ -227,16 +227,21 @@ def run_rootFinder(bash_cmd):
 
 
 if __name__ == '__main__':
+	newton_dir = os.chdir("../newton_rootFinder/")
+	dat_name = ("rootFinder_newton.dat")
 	
 	file_name = "rootFinder.exe"
 	command = "./rootFinder.exe"
 	make_make(file_name)
 	runtimeParameters_init(1.e-4)
 	bash_command(command, 300)
+	check_multiple_file(newton_dir, dat_name)
 	runtimeParameters_init(1.e-6)
 	bash_command(command, 300)
+	check_multiple_file(newton_dir, dat_name)
 	runtimeParameters_init(1.e-8)
 	bash_command(command, 300)
+
     # Set runtime parameters here
     # and call the above functions properly,
     # so that this Python code executes the Fortran code
