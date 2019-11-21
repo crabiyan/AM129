@@ -58,7 +58,8 @@ def make_make(file):
     # 3. You need to change your directory from "pyRun/" to
     #    "newton_rootFinder/" to compile the Fortran code.
 
-
+def split(words):
+	return list(words)
 def runtimeParameters_init(threshold):
     # 1. Implement a routine that generates a new "rootFinder.init"
     #    runtime parameter file. Use a proper set of
@@ -88,7 +89,14 @@ def runtimeParameters_init(threshold):
 				print(secondpart)
 				print("\n")
 				print(firstpart)
-				#os.rename(file, smth)
+				listVar = split(secondpart)
+				num = listVar[1]
+				print("num is " + num)
+				newNum=int(num)+1
+				print("newNum is " + str(newNum))
+				newName= firstpart + "." + str(newNum)
+				print("newName is " + newName) 
+				os.rename(file, newName)
 
 
 				break
@@ -100,9 +108,9 @@ def runtimeParameters_init(threshold):
 			os.rename("rootFinder.init", "rootFinder.init.1")
 			break 
 
-		#elif  	dupExists==1:
-		#	print("duplicate exists")
-		#	break
+#		elif  	dupExists==1:
+#			print("duplicate exists")
+#			break
 		#	firstpart,secondpart = os.path.splitext("rootFinder.init.*")
 		#	print(secondpart)
 
@@ -125,7 +133,7 @@ def runtimeParameters_init(threshold):
 				f.write("ftn_type" + "\t" + "1" "\t" + " #[int] Types of function -- either 1 or 2\n")
 				f.write("init_guess" + "\t" + "2." +  "\t" + " #[real] Initial guess for root search. Users are responsible to pick a good one.\n")
 				f.write("multiplicity" + "\t" + "4" + "\t" + " #[int] The mulitiplicity of the root when using the modified newton method\n")
-
+				break
 
 
 
