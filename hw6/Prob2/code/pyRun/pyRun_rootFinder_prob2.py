@@ -21,11 +21,11 @@ Directory structure:
 
 
 #import #import some necessary Python modules
-import numpy.f2py as f2py
-import os, sys, os.path
+import numpy as np
+import matplotlib.pyplot as plt
+import os
 import subprocess
-from subprocess import Popen, PIPE
-from os import path
+from subprocess import Popen
 
 file_num = 0
 dupExists= 0
@@ -50,14 +50,6 @@ def make_make(file):
 			bash_command('make',300)
 			break
 			
-    # 1. Compile the Fortran code if has not been compiled
-    #    (i.e., if 'rootFinder.exe' does not exist yet);
-    #
-    # 2. Otherwise do "make clean" first and then "make".
-    #
-    # 3. You need to change your directory from "pyRun/" to
-    #    "newton_rootFinder/" to compile the Fortran code.
-
 def split(words):
 	return list(words)
 
@@ -85,167 +77,142 @@ def check_multiple_file(cur_dir, file_name):
 			if file_count == 0:
 				os.rename(file_name, file_name+'.'+str(1))
 			elif copy_exists == True:
-				print ("multiple files")
 				new_file = file_name+'.'+str(file_count)
 				os.rename(file_name, new_file)
 	
 				
-def runtimeParameters_init(threshold):
-    # 1. Implement a routine that generates a new "rootFinder.init"
-    #    runtime parameter file. Use a proper set of
-    #    input arguments to produce a new rootFinder.init (with the same name)
-    #    which has all the necessary input parameters to run the Fortran code.
-    #    For instance, the first few lines look like:
-    #      run_name     (... and some space ...) 'newton'
-    #      method_type  (... and some space ...) 'newton'
-    #      ...
-    
-#Cameron's test code	
+def runtimeParameters_init(run_name, method_type, x_beg, x_end, max_iter, threshold, ftn_type, init_guess, multiplicity):
+
 	newton_dir = os.chdir("../newton_rootFinder/")
 	file_name = ("rootFinder.init")
 	check_multiple_file(newton_dir, file_name)
 	
 	with open("rootFinder.init", "w+") as f:
 
-		print("works")
-		f.write("TEST\n")
-		f.write("run_name" + "\t" "'newton' # [char] Specify your outputfile name, eg., 'rootFinder_[run_name].dat' \n")
-		f.write("method_type" + "\t" "'newton' # [char] Choose a search method between 'newton' and 'modified_newton' \n")
+		f.write("run_name" + "\t\t" +run_name+"\t"+"# [char] Specify your outputfile name, eg., 'rootFinder_[run_name].dat' \n")
+		f.write("method_type" + "\t" +method_type+"\t"+"# [char] Choose a search method between 'newton' and 'modified_newton' \n")
 
-		f.write("x_beg" + "\t\t" "-100.0" + "\t" + "#[real] Setting up the search domain \n")
-		f.write("x_end" + "\t\t" "30.0"  + "\t" + "#[real] Setting up the search domain \n")
+		f.write("x_beg" + "\t\t" +str(x_beg) + "\t" + "#[real] Setting up the search domain \n")
+		f.write("x_end" + "\t\t" +str(x_end)  + "\t\t" + "#[real] Setting up the search domain \n")
 
-		f.write("max_iter" + "\t" "10000 #[int] Maximum number of iteration\n")
-		f.write("threshold" + "\t" + str(threshold) + " #[int] Maximum number of iteration\n")
+		f.write("max_iter" + "\t\t" +str(max_iter)+"\t"+"#[int] Maximum number of iteration\n")
+		f.write("threshold" + "\t\t" + str(threshold) +"\t"+ "#[int] Maximum number of iteration\n")
 
-		f.write("ftn_type" + "\t" + "1" "\t" + " #[int] Types of function -- either 1 or 2\n")
-		f.write("init_guess" + "\t" + "2." +  "\t" + " #[real] Initial guess for root search. Users are responsible to pick a good one.\n")
-		f.write("multiplicity" + "\t" + "4" + "\t" + " #[int] The mulitiplicity of the root when using the modified newton method\n")
-
-#Maya's Code:	
-'''
-	cur_dir = os.chdir("../newton_rootFinder/")
-	while True:
-		file_list = os.listdir(cur_dir)
-		for file in file_list:
-			if file.startswith("rootFinder.init."):
-				global dupExists 
-				dupExists = 1
-
-				firstpart,secondpart = os.path.splitext(file)
-				print(secondpart)
-				print("\n")
-				print(firstpart)
-				listVar = split(secondpart)
-				num = listVar[1]
-				print("num is " + num)
-				newNum=int(num)+1
-				print("newNum is " + str(newNum))
-				newName= firstpart + "." + str(newNum)
-				print("newName is " + newName) 
-				os.rename(file, newName)
-
-
-				break
-
-
-
-		if	path.exists("rootFinder.init"):
-			print("original exists")
-			os.rename("rootFinder.init", "rootFinder.init.1")
-			break 
-
-		elif  	dupExists==1:
-#			print("duplicate exists")
-			break
-		#	firstpart,secondpart = os.path.splitext("rootFinder.init.*")
-		#	print(secondpart)
-
-
-
-		else:
-			with open("rootFinder.init", "w+") as f:
-
-				print("works")
-				f.write("HI\n")
-				f.write("run_name" + "\t" "'newton' # [char] Specify your outputfile name, eg., 'rootFinder_[run_name].dat' \n")
-				f.write("method_type" + "\t" "'newton' # [char] Choose a search method between 'newton' and 'modified_newton' \n")
-
-				f.write("x_beg" + "\t\t" "-100.0" + "\t" + "#[real] Setting up the search domain \n")
-				f.write("x_end" + "\t\t" "30.0"  + "\t" + "#[real] Setting up the search domain \n")
-
-				f.write("max_iter" + "\t" "10000 #[int] Maximum number of iteration\n")
-				f.write("threshold" + "\t" + str(threshold) + " #[int] Maximum number of iteration\n")
-
-				f.write("ftn_type" + "\t" + "1" "\t" + " #[int] Types of function -- either 1 or 2\n")
-				f.write("init_guess" + "\t" + "2." +  "\t" + " #[real] Initial guess for root search. Users are responsible to pick a good one.\n")
-				f.write("multiplicity" + "\t" + "4" + "\t" + " #[int] The mulitiplicity of the root when using the modified newton method\n")
-				break
-
-'''
-
-    # 2. When writing a new "rootFinder.init", check if there is an old one already.
-    #    If so, rename the old one to, say, "rootFinder.init.1" before
-    #    creating a new "rootFinder.init". You would end up with having multiple
-    #    of them, e.g., "rootFinder.init.1", "rootFinder.init.2", etc.,
-    #    along with "rootFinder.init" which is the active runtime parameter file in use.
-    
+		f.write("ftn_type" + "\t\t" + str(ftn_type)+ "\t\t" + "#[int] Types of function -- either 1 or 2\n")
+		f.write("init_guess" + "\t" + str(init_guess) +  "\t\t" + "#[real] Initial guess for root search. Users are responsible to pick a good one.\n")
+		f.write("multiplicity" + "\t" + str(multiplicity) + "\t\t" + "#[int] The mulitiplicity of the root when using the modified newton method\n")
+ 
 
 def run_rootFinder(bash_cmd):
-    # This routine executes the Fortran excutable, "rootFinder.exe"
-    # using "rootFinder.init" you just created.
+
 	cur_dir = os.chdir("../newton_rootFinder/")
 	bash_command(bash_cmd, 300)
     
-#def plot_data(plotFileName, and more???):
-    # 1. This function produces two figures:
-    #     (1) solution (y-axis) vs. iteration number (x-axis), and
-    #     (2) error (y-axis) vs. iteration number (x-axis).
-    #
-    # 2. You can plot the two as either subfigures or two separate figures.
-    #
-    # 3. In each figure, you need to have at least:
-    #    xlabel, ylabel, title, line plot with reasonable choices of linestyle and marker.
-    #    (see for instance, http://www.scipy-lectures.org/intro/matplotlib/matplotlib.html)
-    #
-    # 4. Your plots need to have big enough x and y ranges so that your solution and error
-    #    graphs are properly fit in the figures.
-    #    Make sure that you use a single same y-range for solutions and errors, respectively,
-    #    so that ALL plots of three different threshold values have the same respective scales in y.
-    #
-    # 5. You need to plot your results to BOTH screen and png files.
-    #    The png file names should bear information on ftn_type, threshold values at least, e.g.,
-    #    the file name "result_2_1e-08.png" implies ftn_type = 2 and threshold value = 1.e-8.
-    #    Do not hardcode three different file names, but use string manipulations in naming them
-    #    in your implementation.
-    #
-    # 6. After plotting, you save the data file "rootFinder_newton.dat"
-    #    to a new name, e.g.., "rootFinder_newton.dat.1", etc..
-    #    At the end of running three runs for three different threshold values,
-    #    you should have collected "rootFinder_newton.dat.1", "rootFinder_newton.dat.2",
-    #    as well as the latest data file "rootFinder_newton.dat".
 
+def plot_data(initFileName, datFileName, pngFileName):
+	guess = "init_guess"
+	
+	solution = 0.
+	error = 0.
+	init_guess = 0.
+	iteration = 0
+	
+	
+	#initial guess value = init_guess
+	with open(initFileName, 'r') as f:
+		while True:
+			line = f.readline()
+			if not line:
+				break
+			elif line.startswith(guess):
+				arr = line.split()
+				init_guess = float(arr[1])
+				break
+	
+	with open (datFileName, 'r') as f:
+		d = dict()
+		x_list = list()
+		y_list = list()
+		error_list = list()
+		while True:
+			line = f.readline()
+			if not line:
+				break
+			else:
+				arr = line.split()
+				key = int(arr[0])
+				value = float(arr[1])
+				d.update({key:value})
+	
+	for key in sorted(d.keys()):
+		iteration = key
+		solution = d[key]
+		error = abs(solution-init_guess)
+		x_list.append(iteration)
+		y_list.append(solution)
+		error_list.append(error)
+		print ("'",iteration,"'"+":",solution,":",error )
 
+	xlim = len(x_list) + 5
+	ylim = max(y_list) + 5
+	fig, (ax1, ax2) = plt.subplots(2)
+	fig.suptitle('HW6 Figure')
+	ax1.plot(x_list, y_list, marker='.', mfc='black')
+	ax1.set_xlim([0,xlim])
+	ax1.set_ylim([-ylim,ylim])
+	ax1.set(xlabel='Iteration',ylabel='Calculated Solutions')
+	ax1.grid(True)
+	
+	ax2.plot(x_list, error_list, marker='.', mfc='black')
+	ax2.set_xlim([0,xlim])
+	ax2.set_ylim([-ylim,ylim])
+	ax2.set(xlabel='Iterations', ylabel='Error')
+	ax2.grid(True)
+
+	plt.draw()
+	plt.savefig(pngFileName)
+	
+	
 if __name__ == '__main__':
+
+	# init File Parameters
+	run_name = 'newton'
+	method_type = 'newton'
+	x_beg = -1000.0
+	x_end = 1000.0
+	max_iter = 10000
+	threshold_1 = 1.e-4
+	threshold_2 = 1.e-6
+	threshold_3 = 1.e-8
+	ftn_type = 1
+	init_guess = 0.00039
+	multiplicity = 4
+	
+	png_file_1 = "result_"+str(ftn_type)+"_"+str(threshold_1)+".png"
+	png_file_2 = "result_"+str(ftn_type)+"_"+str(threshold_2)+".png"
+	png_file_3 = "result_"+str(ftn_type)+"_"+str(threshold_3)+".png"
+	
 	newton_dir = os.chdir("../newton_rootFinder/")
 	dat_name = ("rootFinder_newton.dat")
 	
 	file_name = "rootFinder.exe"
 	command = "./rootFinder.exe"
+	
 	make_make(file_name)
-	runtimeParameters_init(1.e-4)
+	runtimeParameters_init(run_name, method_type, x_beg, x_end, max_iter, threshold_1, ftn_type, init_guess, multiplicity)
 	bash_command(command, 300)
+	plot_data("rootFinder.init", "rootFinder_newton.dat", png_file_1)
+	
 	check_multiple_file(newton_dir, dat_name)
-	runtimeParameters_init(1.e-6)
+	runtimeParameters_init(run_name, method_type, x_beg, x_end, max_iter, threshold_2, ftn_type, init_guess, multiplicity)
 	bash_command(command, 300)
+	plot_data("rootFinder.init", "rootFinder_newton.dat", png_file_2)	
+	
 	check_multiple_file(newton_dir, dat_name)
-	runtimeParameters_init(1.e-8)
+	runtimeParameters_init(run_name, method_type, x_beg, x_end, max_iter, threshold_3, ftn_type, init_guess, multiplicity)
 	bash_command(command, 300)
+	plot_data("rootFinder.init", "rootFinder_newton.dat", png_file_3)
+	
+	plt.show()
 
-    # Set runtime parameters here
-    # and call the above functions properly,
-    # so that this Python code executes the Fortran code
-    # for three different threshold values
-    # 1.e-4, 1.e-6, 1.e-8
-    # ...
-    # ...
+
