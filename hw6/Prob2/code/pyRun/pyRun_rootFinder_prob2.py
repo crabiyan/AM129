@@ -1,24 +1,13 @@
-"""
-Template file for hw6:
-
-Directory structure:
-
-   hw6/Prob2/code/
-               |-- newton_rootFinder/RootFinder.F90
-               |                     findRootMethod_module.F90
-               |                     makefile
-               |                     read_initFile_module.F90
-               |                     definition.h
-               |                     ftn_module.F90
-               |                     output_module.F90
-               |                     setup_module.F90
-               |                     (excluding rootFinder.init)
-               |
-               |-- pyRun/pyRun_rootFinder_prob2.py
-       
-
-"""
-
+####################################################
+# AM129 hw6
+#
+# Students:
+# Cameron Rabiyan - Driver
+# Maya Apotheker - Navigator
+# Manny Gamboa - Navigator
+#
+# Group 334-7
+####################################################
 
 #import #import some necessary Python modules
 import numpy as np
