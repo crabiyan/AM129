@@ -16,11 +16,12 @@ FC	= gfortran
 
 FFLAGS_DEBUG = -Wall -Wextra -Wimplicit-interface -fPIC -fmax-errors=1 -g -fcheck=all -fbacktrace
 
-FFLAGS_OPT = -ggdb -O3 -fdefault-real-8 -fdefault-double-8 -ffree-line-length-none -Wuninitialized
+FFLAGS_OPT = -ggdb -O3 -fdefault-real-8 -fdefault-double-8 -ffree-line-length-none -fno-automatic -Wuninitialized
 
-EXE_FILE = euler.exe
+EXE_FILE = main.exe
 
-OBJS  = euler.o
+OBJS  = main.o \
+     euler.o
 
 .PHONY: clean
 ########################################################################################
@@ -45,7 +46,7 @@ $(EXE_FILE) : $(OBJS)
 #######################################################################################
 #SOME USEFUL COMMANDS
 clean:
-	@rm -f *.o *.mod *~ euler.exe *.dat
+	@rm -f *.o *.mod *~ main.exe *.dat
 
 # debug: clean
 debug: FFLAGS_OPT = $(FFLAGS_DEBUG)
@@ -53,7 +54,7 @@ debug: $(EXE_FILE)
 
 #######################################################################################
 #LET'S DEFINE SOME MODULE DEPENDENCIES!
-
+main.o: euler.o
 
 
 #######################################################################################
