@@ -16,7 +16,7 @@ contains
           implicit none
           real(kind=8), intent(INOUT) :: y_0, N
           integer, intent(INOUT) :: t_0, t_f
-          character (len=12), intent(IN) :: file_name
+          character (len=*), intent(IN) :: file_name
           real(kind=8) :: h
           
           h = (t_f - t_0) / N
