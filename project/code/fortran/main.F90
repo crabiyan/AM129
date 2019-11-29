@@ -6,12 +6,12 @@ program main
      !! eulers_method(t_0, y_0, t_f, N, file_name)
 
      implicit none
-     real (kind=8) :: y_0, N
+     real (kind=8) :: t_0, y_0, N
      character (len=80) :: fname
-     integer :: t_0, t_f
+     integer :: t_f
      
      print*
-     t_0 = 0
+     t_0 = 0.d0
      y_0 = -2.d0
      t_f = 10
      N = 8.d0
@@ -20,7 +20,7 @@ program main
      print*
      
      print*
-     t_0 = 0
+     t_0 = 0.d0
      y_0 = -2.d0
      t_f = 10
      N = 16.d0
@@ -29,7 +29,7 @@ program main
      print*
      
      print*
-     t_0 = 0
+     t_0 = 0.d0
      y_0 = -2.d0
      t_f = 10
      N = 32.d0
@@ -38,7 +38,7 @@ program main
      print*
      
      print*
-     t_0 = 0
+     t_0 = 0.d0
      y_0 = -2.d0
      t_f = 10
      N = 64.d0
