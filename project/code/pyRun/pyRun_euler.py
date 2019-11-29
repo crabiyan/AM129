@@ -40,14 +40,13 @@ def make_make(file):
 
 # Calculates the real solution and places the solutions into the real_sol numPy array
 def real_solution(real_sol, increment):
-	
-	iteration = 1
+	t = 0
 	
 	#solution formula: y(t) = -( (2ln(t^2 + 1) + 4) )^(1/2)
 	for i, index in enumerate (real_sol):
-		iteration = i + 1
-		real_sol[i] = -( 2 * np.log( (iteration**2) + 1 ) +4 )**(.5)
-	
+		real_sol[i] = -( 2 * np.log( (t**2) + 1 ) +4 )**(.5)
+		t = t + increment
+		
 def calculate_error(datFile, outFile):
 	
 	# Get the number of grid points from the datFile
@@ -56,16 +55,16 @@ def calculate_error(datFile, outFile):
 	t_increment = 10/num
 	
 	#create numPy array with number of indices
-	Numerical_Soln_y = np.zeros(num)
-	Numerical_Soln_t = np.zeros(num)
-	Real_Soln = np.zeros(num)
+	Numerical_Soln_y = np.zeros(num+1)
+	Numerical_Soln_t = np.zeros(num+1)
+	Real_Soln = np.zeros(num+1)
 	error = 0
 	t_val = 0
 	
 	#initialize numPy array with values from datFile
 	with open (datFile, 'r') as f:
 		index = 0
-		while index < num:
+		while index <= num:
 			line = f.readline()
 			current_line = line.split()
 			t_val = float(current_line[0])
@@ -78,11 +77,6 @@ def calculate_error(datFile, outFile):
 	
 	for i, index in enumerate (Real_Soln):
 		error = error + abs(Real_Soln[i] - Numerical_Soln_y[i])
-		
-#	print (Numerical_Soln_y)
-#	print (Numerical_Soln_t)
-#	print (Real_Soln)
-#	print (error)
 	
 	plot_euler(datFile, outFile, Numerical_Soln_y, Numerical_Soln_t, Real_Soln, error)
 	

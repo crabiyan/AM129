@@ -23,11 +23,11 @@ contains
           
           open(unit=62, file=file_name)
           
-          do while (t_0 < t_f)
+          do while (t_0 <= t_f)
                y_0 = y_0 + h * dydt(t_0, y_0)
-               t_0 = t_0 + h
                print "('t: ',F16.8,'     ','Numerical Solution: ', F16.8)", t_0, y_0
                write(62,*) t_0, y_0
+               t_0 = t_0 + h
           end do
           
           close(62)
