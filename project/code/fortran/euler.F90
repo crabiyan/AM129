@@ -6,7 +6,6 @@ contains
      real(kind=8) function dydt(t,y)
 
           real(kind=8), intent(IN) :: t,y
-!          integer, intent(IN) :: t
           
           dydt = (2 * t)/(y * (1+(t**2)))
           

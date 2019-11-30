@@ -46,7 +46,7 @@ $(EXE_FILE) : $(OBJS)
 #######################################################################################
 #SOME USEFUL COMMANDS
 clean:
-	@rm -f *.o *.mod *~ main.exe *.dat *.png
+	@rm -f *.o *.mod *~ main.exe *.dat *.png *.init*
 
 # debug: clean
 debug: FFLAGS_OPT = $(FFLAGS_DEBUG)
