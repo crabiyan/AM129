@@ -1,0 +1,20 @@
+README file for AM129 Final Project (Type B)
+
+Group ID: 344-7
+
+Names: Cameron Rabiyan, Manny Gamboa, Maya Apotheker
+
+Instructions: 
+
+ -Implemented program to solve Initial Value Problem of a first-order differential equation
+ 
+ -differential equation -> dy/dt = f(t,y) = ( 2t )/( y (1 + t^2) )
+
+ -To Run: from the project/code/pyRun directory, run the command: <python3 pyRun_euler.py>
+ 
+ -Program will compile and run calculations using fortran and save 4 figures into the pyRun directory
+ 
+ -Result figures will compare euler's method to the exact solution given by y(t) = -(2ln((t^2 + 1)))^(1/2)
+ 
+ -Input Variables can be changed from main function in pyRun_euler.py
+ 
