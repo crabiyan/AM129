@@ -1,6 +1,6 @@
 
 module euler
-
+use setup_module
 contains
 
      real(kind=8) function dydt(t,y)
@@ -13,13 +13,11 @@ contains
 
      subroutine eulers_method(t_0, y_0, t_f, N, file_name)
           implicit none
-          real(kind=8), intent(INOUT) :: t_0, y_0, N
-          integer, intent(INOUT) :: t_f
-          character (len=*), intent(IN) :: file_name
+          real(kind=8), intent(INOUT) :: t_0, y_0, N, t_f
+          character (len=80), intent(IN) :: file_name
           real(kind=8) :: h
-          
           h = (t_f - t_0) / N
-          
+
           open(unit=62, file=file_name)
           
           do while (t_0 <= t_f)

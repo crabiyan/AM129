@@ -67,12 +67,13 @@ def check_multiple_files(cur_dir, file_name):
 				os.rename(file_name, new_file)
 
 
-def runtimeParameters_init(t_0, y_0, t_f, N, initFile):
+def runtimeParameters_init(t_0, y_0, t_f, N, initFile, datFile):
 
 	fortran_dir = os.chdir("../fortran/")
 	check_multiple_files(fortran_dir, initFile)
 	
 	with open(initFile, "w+") as f:
+		f.write("datFile:" + "\t\t" + datFile + "\n")
 		f.write("t_0:" + "\t\t" + str(t_0) + "\n")
 		f.write("y_0:" + "\t\t" + str(y_0) + "\n")
 		f.write("t_f:" + "\t\t" + str(t_f) + "\n")
@@ -186,20 +187,20 @@ if __name__ == '__main__':
 	# Run Commands
 	make_make(file_name)
 	
-	runtimeParameters_init(t_0, y_0, t_f, N_8, initFileName)
+	runtimeParameters_init(t_0, y_0, t_f, N_8, initFileName, datname_8)
 	bash_command(command, 300)
 	calculate_error(initFileName, datname_8, png_file_8)
 
 		
-	runtimeParameters_init(t_0, y_0, t_f, N_16, initFileName)
+	runtimeParameters_init(t_0, y_0, t_f, N_16, initFileName, datname_16)
 	bash_command(command, 300)
 	calculate_error(initFileName, datname_16, png_file_16)
 		
-	runtimeParameters_init(t_0, y_0, t_f, N_32, initFileName)
+	runtimeParameters_init(t_0, y_0, t_f, N_32, initFileName, datname_32)
 	bash_command(command, 300)
 	calculate_error(initFileName, datname_32, png_file_32)
 	
-	runtimeParameters_init(t_0, y_0, t_f, N_64, initFileName)
+	runtimeParameters_init(t_0, y_0, t_f, N_64, initFileName, datname_64)
 	bash_command(command, 300)
 	calculate_error(initFileName, datname_64, png_file_64)	
 	

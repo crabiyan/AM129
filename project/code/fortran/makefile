@@ -21,7 +21,9 @@ FFLAGS_OPT = -ggdb -O3 -fdefault-real-8 -fdefault-double-8 -ffree-line-length-no
 EXE_FILE = main.exe
 
 OBJS  = main.o \
-     euler.o
+     read_initFile_module.o\
+     euler.o\
+     setup_module.o
 
 .PHONY: clean
 ########################################################################################
@@ -54,7 +56,9 @@ debug: $(EXE_FILE)
 
 #######################################################################################
 #LET'S DEFINE SOME MODULE DEPENDENCIES!
-main.o: euler.o
+main.o: setup_module.o euler.o
 
+setup_module.o: read_initFile_module.o
 
+euler.o: setup_module.o
 #######################################################################################
