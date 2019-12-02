@@ -16,13 +16,13 @@ import os
 import subprocess
 
 
-
 # Run Bash commands from current working directory
 def bash_command(cmd, time_out):
 
 	p = subprocess.Popen(['/bin/bash', '-c', cmd])
 	p.wait(timeout=time_out)
 	p.kill()
+
 
 # Run makefile on passed file, runs 'make clean' if .exe file exists already
 def make_make(file):
@@ -38,13 +38,17 @@ def make_make(file):
 			bash_command('make',300)
 			break
 
-def check_multiple_files(cur_dir, file_name):
 
+#Check for existing files
+def check_multiple_files(cur_dir, file_name):
+	
+	#Variable Declarations
 	file_count = 0
 	file_list = os.listdir(cur_dir)
 	original_exists = False
 	copy_exists = False
 	
+	#Check if file exists, rename existing file if dupe exists
 	if file_name in file_list:
 		
 		original_exists = True
@@ -66,12 +70,15 @@ def check_multiple_files(cur_dir, file_name):
 				new_file = file_name+'.'+str(file_count)
 				os.rename(file_name, new_file)
 
-
+#Create .init file with passed parameters
 def runtimeParameters_init(t_0, y_0, t_f, N, initFile, datFile):
 
 	fortran_dir = os.chdir("../fortran/")
+	
+	#Check for existing files
 	check_multiple_files(fortran_dir, initFile)
 	
+	#Create .init file with given parameters
 	with open(initFile, "w+") as f:
 		f.write("datFile:" + "\t\t" + datFile + "\n")
 		f.write("t_0:" + "\t\t" + str(t_0) + "\n")
@@ -82,19 +89,24 @@ def runtimeParameters_init(t_0, y_0, t_f, N, initFile, datFile):
 
 # Calculates the real solution and places the solutions into the real_sol numPy array
 def real_solution(real_sol, increment):
+	#Variable Declaration
 	t = 0
-	num = 0
 	
 	#solution formula: y(t) = -( (2ln(t^2 + 1) + 4) )^(1/2)
 	for i, index in enumerate (real_sol):
 		real_sol[i] = -( 2 * np.log( (t**2) + 1 ) +4 )**(.5)
 		t = t + increment
-		
+
+
+#Calculate the error from data in datFile		
 def calculate_error(initFile, datFile, outFile):
-	
+
+	#Variable Declarations	
 	os.chdir("../fortran/")
 	initial_t = 0
-	final_t = 0	
+	final_t = 0
+	error = 0
+	t_val = 0
 
 	# Initialize Variables from initFile
 	with open (initFile, "r") as f:
@@ -118,8 +130,7 @@ def calculate_error(initFile, datFile, outFile):
 	Numerical_Soln_y = np.zeros(int(num)+1)
 	Numerical_Soln_t = np.zeros(int(num)+1)
 	Real_Soln = np.zeros(int(num)+1)
-	error = 0
-	t_val = 0
+
 	
 	#initialize numPy array with values from datFile
 	with open (datFile, 'r') as f:
@@ -132,20 +143,29 @@ def calculate_error(initFile, datFile, outFile):
 			Numerical_Soln_y[index] = solution
 			Numerical_Soln_t[index] = t_val
 			index = index + 1
-			
+	
+	#initialize numPy array with exact solution values		
 	real_solution(Real_Soln, t_increment)
 	
+	#Calculate the error between exact and euler's solution
 	for i, index in enumerate (Real_Soln):
 		error = error + abs(Real_Soln[i] - Numerical_Soln_y[i])
 	
-	plot_euler(outFile, Numerical_Soln_y, Numerical_Soln_t, Real_Soln, error)
+	error = error * (1/num)
 	
+	#Plot both solutions to a graph
+	plot_euler(outFile, Numerical_Soln_y, Numerical_Soln_t, Real_Soln, error)
+
+
+#Plot the data into a graph	
 def plot_euler(outFile, Numerical_Soln_y, Numerical_Soln_t, Real_Soln, error):
      
 	cur_dir = os.chdir("../pyRun/")
-     
+
+    #Create figure
 	fig = plt.figure()
 	
+	#Plot data to graph	
 	fig.suptitle("Error: "+str(error))
 	plt.xlabel('t axis')
 	plt.ylabel('y axis')
@@ -157,9 +177,10 @@ def plot_euler(outFile, Numerical_Soln_y, Numerical_Soln_t, Real_Soln, error):
 	plt.draw()
 
 
+#Main Function
 if __name__ == '__main__':
 	
-	# Variable Declaration
+	# Variable Declarations
 	png_file_8 = "result_8.png"
 	png_file_16 = "result_16.png"
 	png_file_32 = "result_32.png"
@@ -170,6 +191,7 @@ if __name__ == '__main__':
 	file_name = "main.exe"
 	command = "./main.exe"
 	
+	#Change these variables for different program inputs
 	t_0 = 0.0
 	t_f = 10
 	y_0 = -2.0
@@ -183,6 +205,7 @@ if __name__ == '__main__':
 	datname_64 = "output_64.dat"
 	
 	initFileName = "euler.init"
+	
 	
 	# Run Commands
 	make_make(file_name)
@@ -204,7 +227,7 @@ if __name__ == '__main__':
 	bash_command(command, 300)
 	calculate_error(initFileName, datname_64, png_file_64)	
 	
-	
+	#Display graph to the screen
 	plt.show()
 
 
